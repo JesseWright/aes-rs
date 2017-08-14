@@ -1,0 +1,7 @@
+[package]
+name = "aes"
+version = "0.1.0"
+authors = ["Jesse Wright", "Jinwook Kim"]
+
+[dependencies]
+clap = "2.26.0"
