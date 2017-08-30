@@ -40,12 +40,12 @@ fn main() {
         .long("parallel")
         .help("Provides a config file to myprog");
 
-    let output = Arg::with_name("Decrypt")
-        .short("d")
-        .long("decrypt")
+    let output = Arg::with_name("output")
+        .short("o")
+        .long("output")
         .takes_value(true)
-        .value_name("FILE")
-        .help("Provides a config file to myprog");
+        .value_name("PATH")
+        .help("Path for output file");
 
     let app = App::new("Advanced Encryption Standard")
         .version("0.1")
@@ -53,5 +53,17 @@ fn main() {
         .about("A lightweight AES utility that to encrypt arbitrary data")
         .args(&[encrypt, decrypt, mode, key, input, output]);
 
-    let matches = app.get_matches_from_safe(&["operation", "mode", "key", "input", "output"]);
+    let options = &["operation", "mode", "key", "input", "output"];
+    let matches = app.get_matches_from_safe(options);
+
+    let matches = match matches {
+        Ok(arg_matches) => arg_matches,
+        Err(err) => {
+            println!("Bad options: {:?}", err);
+            std::process::exit(1);
+            unreachable!();
+        }
+    };
+
+    
 }

@@ -8,12 +8,12 @@ enum Mode {
 #[derive(Debug, Display, PartialOrd, PartialEq, Eq)]
 enum KeyLength {
     bit128,
-    bit160
+    bit160,
     bit256,
     bit512,
     bit1024,
     bit2048,
-    custom(size: usize)
+    custom(usize)
 }
 
 trait Encrypt {
@@ -24,8 +24,7 @@ trait Encrypt {
     fn encrypt(data: &[u8], key: &[u8]) -> [u8] {
     }
 
-    use block;
-    fn encrypt_block(block: ) -> [u8] {
+    fn encrypt_block(block: block) -> [u8] {
 
     }
 }
