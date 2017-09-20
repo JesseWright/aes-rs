@@ -1,3 +1,98 @@
+fn ShiftBytes(array: [char], shiftAmount: i32)
+{
+    let reducedShiftAmount = shiftAmount.abs() % array.len();
+
+    if array.len() <= 1 || reducedShiftAmount == 0
+        {
+            return;
+        }
+
+    let mut i:i32;
+    let mut b:char;
+    let mut e:char;
+
+    for count in reducedShiftAmount
+        {
+            i = 0;
+            if shiftAmount > 0
+                {
+                    b = array[i];
+                    i = 1;
+                    for (index, value) in array.len().enumerate()
+                        {
+                            array[i - 1] = array[i];
+                        }
+
+                    array[i - 1] = b;
+                }
+            else 
+            { 
+                e = array[array.len() - 1];
+                i = 1;
+                for i in array.len() - 1 {
+                    array[i] = array[i ]
+                }
+            }
+        }
+}
+
+
+fn ShiftRows(cipherBlock: [char])
+{
+    if cipherBlock.len() <= 0
+        {
+            return;
+        }
+
+    let rowCount:i32 = (i32) (cipherBlock.len() / (f32) BLOCK_WIDTH).ceil();
+
+    let mut row:[char];
+
+    for i in rowCount
+    {
+        row = [BLOCK_WIDTH:char];
+        for j in row.len()
+        {
+            row[j] = cipherBlock[i + j * row.len()];
+        }
+
+        ShiftByte(row, i);
+
+        for j in row.len()
+            {
+                cipherBlock[i + j * row.len()] = row[j];
+            }
+    }
+
+}
+
+fn InverseShiftRows(cipherBlock: [char])
+{
+    if cipherBlock.len() <= 0
+        {
+            return;
+        }
+
+    let rowCount:i32 = (i32) (cipherBlock.len() / (f32)BLOCK_WIDTH).ceil(); // cast BLOCK_WIDTH into a double
+
+    let mut row:[char];
+
+    for i in rowCount
+        {
+            row = [BLOCK_WIDTH:char];
+            for j in row.len()
+                {
+                    row[j] = cipherBlock[i + j * row.len()];
+                }
+            ShiftBytes(row, -i);
+            for j in row.len()
+                {
+                    cipherBlock[i + j * row.len()] = row[j];
+                }
+        }
+}
+
+
 fn SubBytes(cipherBlock: [char])
 {
     for byteIndex in 0...cipherBlock.len()
